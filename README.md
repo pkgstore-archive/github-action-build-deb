@@ -58,3 +58,7 @@ In **openSUSE Build Service** add `_service` file:
 
 - `PKG_REPO_NAME` - repository with Debian source packages.
 - `PKG_NAME` - package name.
+
+## Example
+
+- [ext-zsh](https://github.com/pkgstore/linux-deb-ext-zsh)
