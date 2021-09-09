@@ -35,9 +35,7 @@ get() {
 }
 
 build() {
-  install_tool="apt --no-install-recommends --yes"
   cd "${d_src}/_build" || exit 1
-  mk-build-deps -ir -t "${install_tool}" 'debian/control'
   ${debuild} -us -uc -i -d -S && cd ..
 }
 
