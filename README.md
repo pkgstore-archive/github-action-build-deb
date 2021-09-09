@@ -1,6 +1,6 @@
-# GitHub Action: Debian Build Source Package
+# Debian Source Package Builder
 
-GitHub Action for build Debian **source** package.
+**GitHub Action** for build Debian **source** package.
 
 ## Workflow Syntax
 
