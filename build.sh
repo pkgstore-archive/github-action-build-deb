@@ -68,14 +68,9 @@ git_push() {
 }
 
 obs_trigger(){
-  if [[ -z "${OBS_TOKEN}" ]]; then
-    echo "${OBS_TOKEN}"
-    echo "--- TRIGGER: openSUSE Build Service..."
+  echo "--- TRIGGER: openSUSE Build Service..."
 
-    ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
-  else
-    echo "--- ERROR: OBS_TOKEN not set!"
-  fi
+  ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
 git_clone && pkg_build && pkg_move && git_push && obs_trigger
