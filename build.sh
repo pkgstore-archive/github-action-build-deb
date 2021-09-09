@@ -20,6 +20,7 @@ d_dst="/root/git/dst"
 # Git config.
 ${git} config --global user.email "${EMAIL}"
 ${git} config --global user.name "${USER}"
+${git} config --global init.defaultBranch 'main'
 
 _timestamp() {
   ${date} -u '+%Y-%m-%d %T'
