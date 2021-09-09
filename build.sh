@@ -36,7 +36,7 @@ get() {
 }
 
 build() {
-  cd "${d_src}" || exit 1
+  cd "${d_src}/_build" || exit 1
   ${debuild} -us -uc -i -d -S && cd .. || exit 1
 }
 
