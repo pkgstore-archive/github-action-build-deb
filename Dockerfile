@@ -7,6 +7,6 @@ LABEL "repository"="https://github.com/pkgstore/github-action-build-deb.git"
 LABEL "homepage"="https://pkgstore.github.io/"
 
 COPY *.sh /
-RUN apt update && apt install -y bash git git-lfs tar xz build-essential fakeroot devscripts
+RUN apt update && apt install -y bash git git-lfs tar build-essential fakeroot devscripts
 
 ENTRYPOINT ["/entrypoint.sh"]
