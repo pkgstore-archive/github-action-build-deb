@@ -11,21 +11,33 @@ inputs:
   repo_dst:
     description: "Repository (destination)"
     required: true
-  user:
-    description: "User"
+  user_name:
+    description: "User Name"
     required: true
-  email:
-    description: "E-mail"
+  user_email:
+    description: "User E-mail"
     required: true
-  token:
-    description: "Token"
+  user_token:
+    description: "User Token"
     required: true
+  obs_token:
+    description: "OBS Token"
+    required: false
+  obs_project:
+    description: "OBS Project"
+    required: false
+  obs_package:
+    description: "OBS Package"
+    required: false
 runs:
   using: "docker"
   image: "Dockerfile"
   args:
     - ${{ inputs.repo_src }}
     - ${{ inputs.repo_dst }}
-    - ${{ inputs.user }}
-    - ${{ inputs.email }}
-    - ${{ inputs.token }}
+    - ${{ inputs.user_name }}
+    - ${{ inputs.user_email }}
+    - ${{ inputs.user_token }}
+    - ${{ inputs.obs_token }}
+    - ${{ inputs.obs_project }}
+    - ${{ inputs.obs_package }}
