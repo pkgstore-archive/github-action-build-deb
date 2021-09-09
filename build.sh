@@ -36,12 +36,12 @@ get() {
 }
 
 build() {
-  cd "${d_src}/_build" || exit 1
-  ${debuild} -us -uc -i -d -S && cd ..
+  pushd "${d_src}/_build" || exit 1
+  ${debuild} -us -uc -i -d -S && popd || exit 1
 }
 
 move() {
-  for i in *.tar.xz *.dsc *.build *.buildinfo *.changes; do
+  for i in *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${mv} "${i}" "${d_dst}" || exit 1
   done
 }
@@ -49,7 +49,7 @@ move() {
 push() {
   ts="$( _timestamp )"
 
-  cd "${d_dst}" || exit 1
+  pushd "${d_dst}" || exit 1
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 }
 
