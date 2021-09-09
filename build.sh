@@ -35,7 +35,7 @@ get() {
 }
 
 build() {
-  cd "${d_src}" || exit 1
+  cd "${d_src}/_build/debian" || exit 1
   ${debuild} -us -uc && cd ..
 }
 
