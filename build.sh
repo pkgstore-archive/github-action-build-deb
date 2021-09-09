@@ -36,7 +36,7 @@ get() {
 
 build() {
   cd "${d_src}/_build" || exit 1
-  ${debuild} -us -uc -i -d -S && cd ..
+  ${debuild} -us -uc -S && cd ..
 }
 
 move() {
