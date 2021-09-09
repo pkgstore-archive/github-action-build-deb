@@ -1,6 +1,6 @@
 name: "Debian Build Package"
 author: "Kitsune Solar <kitsune.solar@gmail.com>"
-description: ""
+description: "GitHub Action for build Debian source package."
 branding:
   icon: "archive"
   color: "blue"
