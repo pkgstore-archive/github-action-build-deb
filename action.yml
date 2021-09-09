@@ -2,8 +2,8 @@ name: "Debian Build Package"
 author: "Kitsune Solar <kitsune.solar@gmail.com>"
 description: ""
 branding:
-  icon: ""
-  color: ""
+  icon: "archive"
+  color: "blue"
 inputs:
   repo_src:
     description: "Repository (source)"
