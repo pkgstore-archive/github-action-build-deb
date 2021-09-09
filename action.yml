@@ -1,4 +1,4 @@
-name: "Debian Build Package"
+name: "Build Debian Package"
 author: "Kitsune Solar <kitsune.solar@gmail.com>"
 description: "GitHub Action for build Debian source package."
 branding:
