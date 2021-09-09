@@ -14,8 +14,8 @@ git="$( command -v git )"
 date="$( command -v date )"
 
 # Dirs.
-d_src="/root/git/src"
-d_dst="/root/git/dst"
+d_src="/root/git/repo_src"
+d_dst="/root/git/repo_dst"
 
 # Git config.
 ${git} config --global user.email "${EMAIL}"
@@ -36,7 +36,7 @@ get() {
 }
 
 build() {
-  cd "${d_src}/_build" || exit 1
+  cd "${d_src}" || exit 1
   ${debuild} -us -uc -i -d -S && cd .. || exit 1
 }
 
