@@ -18,10 +18,13 @@ jobs:
       - uses: pkgstore/github-action-build-deb@main
         with:
           repo_src: "https://github.com/${{ github.repository }}.git"
-          repo_dst: "https://github.com/PKG_REPO_NAME.git"
+          repo_dst: "https://github.com/REPO_PKG_NAME.git"
           user_name: "${{ secrets.BUILD_USER_NAME }}"
           user_email: "${{ secrets.BUILD_USER_EMAIL }}"
           user_token: "${{ secrets.BUILD_USER_TOKEN }}"
+          obs_token: "${{ secrets.BUILD_OBS_TOKEN }}"
+          obs_project: "HOME:PROJECT"
+          obs_package: "PKG_NAME"
 ```
 
 ### Legend
@@ -31,6 +34,9 @@ jobs:
 - `user_name` - GitHub user name.
 - `user_email` - GitHub user email.
 - `user_token` - GitHub user token.
+- `obs_token` - openSUSE BS token.
+- `obs_project` - openSUSE BS project name.
+- `obs_package` - openSUSE BS package name.
 
 ## openSUSE Build Service
 
