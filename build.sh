@@ -36,6 +36,7 @@ get() {
 
 build() {
   cd "${d_src}/_build" || exit 1
+  mk-build-deps -i debian/control
   ${debuild} -us -uc && cd ..
 }
 
