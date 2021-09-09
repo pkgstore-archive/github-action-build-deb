@@ -46,7 +46,7 @@ In **openSUSE Build Service** add `_service` file:
 <services>
   <service name="obs_scm">
     <param name="scm">git</param>
-    <param name="url">https://github.com/PKG_REPO_NAME.git</param>
+    <param name="url">https://github.com/REPO_PKG_NAME.git</param>
     <param name="revision">main</param>
     <param name="version">_none_</param>
     <param name="filename">PKG_NAME</param>
@@ -62,7 +62,7 @@ In **openSUSE Build Service** add `_service` file:
 
 ### Legend
 
-- `PKG_REPO_NAME` - repository with Debian source packages.
+- `REPO_PKG_NAME` - repository with Debian source packages.
 - `PKG_NAME` - package name.
 
 ## Example
