@@ -61,7 +61,7 @@ git_push() {
 
 obs_trigger(){
   if [[ -z "${OBS_TOKEN}" ]]; then
-    ${curl} curl -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
+    ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
   else
     echo "OBS_TOKEN not set!"
   fi
