@@ -41,7 +41,7 @@ build() {
 }
 
 move() {
-  for i in _service *.tar.* *.dsc *.build *.buildinfo *.changes; do
+  for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${mv} "${i}" "${d_dst}" || exit 1
   done
 }
