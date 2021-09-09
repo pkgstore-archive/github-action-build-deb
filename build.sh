@@ -37,21 +37,21 @@ get() {
 }
 
 build() {
-  cd "${d_src}/_build" || exit 1
-  ${debuild} -us -uc -i -d -S && cd .. || exit 1
+  pushd "${d_src}/_build" || exit 1
+  ${debuild} -us -uc -i -d -S && popd || exit 1
 }
 
 move() {
   for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${rm} -fv "${d_dst}/${i}"
-    ${mv} -fv "${i}" "${d_dst}" || exit 1
+    ${mv} -fv "${d_src}/${i}" "${d_dst}/" || exit 1
   done
 }
 
 push() {
   ts="$( _timestamp )"
 
-  cd "${d_dst}" || exit 1
+  pushd "${d_dst}/" || exit 1
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 }
 
