@@ -1,11 +1,11 @@
-# GitHub Action: Debian Build DEB
+# GitHub Action: Debian Build Package
 
 GitHub Action for build Debian `.deb` packages.
 
 ## Workflow Syntax
 
 ```yml
-name: "Build: DEB"
+name: "Debian: Build Package"
 
 on:
   - push
