@@ -22,13 +22,13 @@ inputs:
     required: true
   obs_token:
     description: "OBS Token"
-    required: false
+    required: true
   obs_project:
     description: "OBS Project"
-    required: false
+    required: true
   obs_package:
     description: "OBS Package"
-    required: false
+    required: true
 runs:
   using: "docker"
   image: "Dockerfile"

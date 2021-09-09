@@ -33,6 +33,8 @@ _timestamp() {
 
 # Get repos.
 git_clone() {
+  echo "--- GIT: Clone source & destination repositories..."
+
   SRC="https://${USER_NAME}:${USER_TOKEN}@${REPO_SRC#https://}"
   DST="https://${USER_NAME}:${USER_TOKEN}@${REPO_DST#https://}"
 
@@ -41,11 +43,15 @@ git_clone() {
 }
 
 pkg_build() {
+  echo "--- BUILD: Package..."
+
   pushd "${d_src}/_build" || exit 1
   ${debuild} -us -uc -i -d -S && popd || exit 1
 }
 
 pkg_move() {
+  echo "--- MOVE: Package..."
+
   for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${rm} -fv "${d_dst}"/${i}
     ${mv} -fv "${d_src}"/${i} "${d_dst}" || exit 1
@@ -53,6 +59,8 @@ pkg_move() {
 }
 
 git_push() {
+  echo "--- GIT: Push destination repository..."
+
   ts="$( _timestamp )"
 
   pushd "${d_dst}" || exit 1
@@ -61,9 +69,12 @@ git_push() {
 
 obs_trigger(){
   if [[ -z "${OBS_TOKEN}" ]]; then
+    echo "${OBS_TOKEN}"
+    echo "--- TRIGGER: openSUSE Build Service..."
+
     ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
   else
-    echo "OBS_TOKEN not set!"
+    echo "--- ERROR: OBS_TOKEN not set!"
   fi
 }
 

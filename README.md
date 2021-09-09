@@ -19,18 +19,18 @@ jobs:
         with:
           repo_src: "https://github.com/${{ github.repository }}.git"
           repo_dst: "https://github.com/PKG_REPO_NAME.git"
-          user: "${{ secrets.BUILD_USER_NAME }}"
-          email: "${{ secrets.BUILD_USER_EMAIL }}"
-          token: "${{ secrets.BUILD_USER_TOKEN }}"
+          user_name: "${{ secrets.BUILD_USER_NAME }}"
+          user_email: "${{ secrets.BUILD_USER_EMAIL }}"
+          user_token: "${{ secrets.BUILD_USER_TOKEN }}"
 ```
 
 ### Legend
 
-- `repo_src` - source repository URL.
-- `repo_dst` - destination repository URL.
-- `user` - user name.
-- `email` - user email.
-- `token` - user token.
+- `repo_src` - GitHub source repository URL.
+- `repo_dst` - GitHub destination repository URL.
+- `user_name` - GitHub user name.
+- `user_email` - GitHub user email.
+- `user_token` - GitHub user token.
 
 ## openSUSE Build Service
 
