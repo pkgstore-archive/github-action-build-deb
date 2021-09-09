@@ -43,8 +43,8 @@ build() {
 
 move() {
   for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
-    ${rm} -f "${d_dst}/${i}"
-    ${mv} "${i}" "${d_dst}" || exit 1
+    ${rm} -fv "${d_dst}/${i}"
+    ${mv} -fv "${i}" "${d_dst}" || exit 1
   done
 }
 
