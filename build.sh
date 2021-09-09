@@ -36,8 +36,8 @@ get() {
 }
 
 build() {
-  pushd "${d_src}/_build" || exit 1
-  ${debuild} -us -uc -i -d -S && popd || exit 1
+  cd "${d_src}/_build" || exit 1
+  ${debuild} -us -uc -i -d -S && cd .. || exit 1
 }
 
 move() {
@@ -49,7 +49,7 @@ move() {
 push() {
   ts="$( _timestamp )"
 
-  pushd "${d_dst}" || exit 1
+  cd "${d_dst}" || exit 1
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 }
 
