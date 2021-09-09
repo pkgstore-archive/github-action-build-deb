@@ -8,10 +8,11 @@ EMAIL="${4}"
 TOKEN="${5}"
 
 # Apps.
-debuild="$( command -v debuild )"
-mv="$( command -v mv )"
-git="$( command -v git )"
 date="$( command -v date )"
+debuild="$( command -v debuild )"
+git="$( command -v git )"
+mv="$( command -v mv )"
+rm="$( command -v rm )"
 
 # Dirs.
 d_src="/root/git/repo_src"
@@ -42,6 +43,7 @@ build() {
 
 move() {
   for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
+    ${rm} -f "${d_dst}/${i}"
     ${mv} "${i}" "${d_dst}" || exit 1
   done
 }
