@@ -44,7 +44,16 @@ jobs:
 
 ## openSUSE Build Service
 
-In **openSUSE Build Service** add `_service` file:
+### Add `_meta` file
+
+```xml
+<package name="PKG_NAME" project="HOME:PROJECT">
+  <title/>
+  <description/>
+</package>
+```
+
+### Add `_service` file
 
 ```xml
 <services>
