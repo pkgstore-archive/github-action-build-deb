@@ -5,20 +5,26 @@ branding:
   icon: "archive"
   color: "blue"
 inputs:
-  repo_src:
-    description: "Repository (source)"
+  git_repo_src:
+    description: "Git Repository (source)"
     required: true
-  repo_dst:
-    description: "Repository (destination)"
+  git_repo_dst:
+    description: "Git Repository (destination)"
     required: true
-  user_name:
-    description: "User Name"
+  git_user:
+    description: "Git User"
     required: true
-  user_email:
-    description: "User E-mail"
+  git_email:
+    description: "Git E-mail"
     required: true
-  user_token:
-    description: "User Token"
+  git_token:
+    description: "Git Token"
+    required: true
+  obs_user:
+    description: "OBS User"
+    required: true
+  obs_password:
+    description: "OBS Password"
     required: true
   obs_token:
     description: "OBS Token"
@@ -33,11 +39,13 @@ runs:
   using: "docker"
   image: "Dockerfile"
   args:
-    - ${{ inputs.repo_src }}
-    - ${{ inputs.repo_dst }}
-    - ${{ inputs.user_name }}
-    - ${{ inputs.user_email }}
-    - ${{ inputs.user_token }}
+    - ${{ inputs.git_repo_src }}
+    - ${{ inputs.git_repo_dst }}
+    - ${{ inputs.git_user }}
+    - ${{ inputs.git_email }}
+    - ${{ inputs.git_token }}
+    - ${{ inputs.obs_user }}
+    - ${{ inputs.obs_password }}
     - ${{ inputs.obs_token }}
     - ${{ inputs.obs_project }}
     - ${{ inputs.obs_package }}

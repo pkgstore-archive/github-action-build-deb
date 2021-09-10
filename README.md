@@ -17,11 +17,13 @@ jobs:
     steps:
       - uses: pkgstore/github-action-build-deb@main
         with:
-          repo_src: "https://github.com/${{ github.repository }}.git"
-          repo_dst: "https://github.com/REPO_PKG_NAME.git"
-          user_name: "${{ secrets.BUILD_USER_NAME }}"
-          user_email: "${{ secrets.BUILD_USER_EMAIL }}"
-          user_token: "${{ secrets.BUILD_USER_TOKEN }}"
+          git_repo_src: "https://github.com/${{ github.repository }}.git"
+          git_repo_dst: "https://github.com/REPO_PKG_NAME.git"
+          git_user: "${{ secrets.BUILD_GIT_NAME }}"
+          git_email: "${{ secrets.BUILD_GIT_EMAIL }}"
+          git_token: "${{ secrets.BUILD_GIT_TOKEN }}"
+          obs_user: "${{ secrets.BUILD_OBS_USER }}"
+          obs_password: "${{ secrets.BUILD_OBS_PASSWORD }}"
           obs_token: "${{ secrets.BUILD_OBS_TOKEN }}"
           obs_project: "HOME:PROJECT"
           obs_package: "PKG_NAME"
@@ -29,14 +31,16 @@ jobs:
 
 ### Legend
 
-- `repo_src` - GitHub source repository URL.
-- `repo_dst` - GitHub destination repository URL.
-- `user_name` - GitHub user name.
-- `user_email` - GitHub user email.
-- `user_token` - GitHub user token.
+- `git_repo_src` - GitHub source repository URL.
+- `git_repo_dst` - GitHub destination repository URL.
+- `git_user` - GitHub user.
+- `git_email` - GitHub email.
+- `git_token` - GitHub token.
+- `obs_user` - openSUSE BS user.
+- `obs_password` - openSUSE BS password.
 - `obs_token` - openSUSE BS token.
-- `obs_project` - openSUSE BS project name.
-- `obs_package` - openSUSE BS package name.
+- `obs_project` - openSUSE BS project.
+- `obs_package` - openSUSE BS package.
 
 ## openSUSE Build Service
 

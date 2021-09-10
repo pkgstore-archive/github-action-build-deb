@@ -1,14 +1,16 @@
 #!/bin/bash
 
 # Vars.
-REPO_SRC="${1}"
-REPO_DST="${2}"
-USER_NAME="${3}"
-USER_EMAIL="${4}"
-USER_TOKEN="${5}"
-OBS_TOKEN="${6}"
-OBS_PROJECT="${7}"
-OBS_PACKAGE="${8}"
+GIT_REPO_SRC="${1}"
+GIT_REPO_DST="${2}"
+GIT_USER="${3}"
+GIT_EMAIL="${4}"
+GIT_TOKEN="${5}"
+OBS_USER="${6}"
+OBS_PASSWORD="${7}"
+OBS_TOKEN="${8}"
+OBS_PROJECT="${9}"
+OBS_PACKAGE="${10}"
 
 # Apps.
 curl="$( command -v curl )"
@@ -23,8 +25,8 @@ d_src="/root/git/repo_src"
 d_dst="/root/git/repo_dst"
 
 # Git config.
-${git} config --global user.name "${USER_NAME}"
-${git} config --global user.email "${USER_EMAIL}"
+${git} config --global user.name "${GIT_USER}"
+${git} config --global user.email "${GIT_EMAIL}"
 ${git} config --global init.defaultBranch 'main'
 
 _timestamp() {
@@ -35,8 +37,8 @@ _timestamp() {
 git_clone() {
   echo "--- GIT: Clone source & destination repositories..."
 
-  SRC="https://${USER_NAME}:${USER_TOKEN}@${REPO_SRC#https://}"
-  DST="https://${USER_NAME}:${USER_TOKEN}@${REPO_DST#https://}"
+  SRC="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_SRC#https://}"
+  DST="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_DST#https://}"
 
   ${git} clone "${SRC}" "${d_src}" \
     && ${git} clone "${DST}" "${d_dst}"
@@ -52,7 +54,7 @@ pkg_build() {
 pkg_move() {
   echo "--- MOVE: Package..."
 
-  for i in _service README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
+  for i in _service _meta README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${rm} -fv "${d_dst}"/${i}
     ${mv} -fv "${d_src}"/${i} "${d_dst}" || exit 1
   done
@@ -67,12 +69,17 @@ git_push() {
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 }
 
+obs_upload() {
+  ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_src}/_meta" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_meta"
+  ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_src}/_service" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_service"
+}
+
 obs_trigger(){
   echo "--- TRIGGER: openSUSE Build Service..."
 
-  ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://build.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
+  ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
-git_clone && pkg_build && pkg_move && git_push && obs_trigger
+git_clone && pkg_build && pkg_move && git_push && obs_upload && obs_trigger
 
 exit 0
