@@ -19,6 +19,7 @@ debuild="$( command -v debuild )"
 git="$( command -v git )"
 mv="$( command -v mv )"
 rm="$( command -v rm )"
+sleep="$( command -v sleep )"
 
 # Dirs.
 d_src="/root/git/repo_src"
@@ -35,7 +36,7 @@ _timestamp() {
 
 # Get repos.
 git_clone() {
-  echo "--- GIT: Clone source & destination repositories..."
+  echo "--- [GIT] CLONE: '${GIT_REPO_SRC#https://}' & '${GIT_REPO_DST#https://}'"
 
   SRC="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_SRC#https://}"
   DST="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_DST#https://}"
@@ -44,15 +45,17 @@ git_clone() {
     && ${git} clone "${DST}" "${d_dst}"
 }
 
+# Build package.
 pkg_build() {
-  echo "--- BUILD: Package..."
+  echo "--- [SYSTEM] BUILD: '${GIT_REPO_SRC#https://}'"
 
   pushd "${d_src}/_build" || exit 1
   ${debuild} -us -uc -i -d -S && popd || exit 1
 }
 
+# Move package to Debian Package Store repository.
 pkg_move() {
-  echo "--- MOVE: Package..."
+  echo "--- [SYSTEM] MOVE: From '${d_src}' to '${d_dst}'"
 
   for i in _service _meta README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${rm} -fv "${d_dst}"/${i}
@@ -60,8 +63,9 @@ pkg_move() {
   done
 }
 
+# Push package to Debian Package Store repository.
 git_push() {
-  echo "--- GIT: Push destination repository..."
+  echo "--- [GIT] PUSH: '${d_dst}' to '${GIT_REPO_DST#https://}'"
 
   ts="$( _timestamp )"
 
@@ -69,14 +73,20 @@ git_push() {
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 }
 
+# Upload "_meta" & "_service" files to OBS.
 obs_upload() {
+  echo "--- [OBS] UPLOAD: '${OBS_PROJECT}/${OBS_PACKAGE}/_meta'"
   ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_dst}/_meta" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_meta"
+
+  echo "--- [OBS] UPLOAD: '${OBS_PROJECT}/${OBS_PACKAGE}/_service'"
   ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_dst}/_service" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_service"
+
+  ${sleep} 5
 }
 
+# Run build package in OBS.
 obs_trigger(){
-  echo "--- TRIGGER: openSUSE Build Service..."
-
+  echo "--- [OBS] TRIGGER: '${OBS_PROJECT}/${OBS_PACKAGE}'"
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
