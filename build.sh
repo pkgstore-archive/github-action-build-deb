@@ -36,7 +36,7 @@ _timestamp() {
 
 # Get repos.
 git_clone() {
-  echo "--- [GIT] CLONE: '${GIT_REPO_SRC#https://}' & '${GIT_REPO_DST#https://}'"
+  printf '\n--- [GIT] CLONE: "%s" & "%s"' "${GIT_REPO_SRC#https://}" "${GIT_REPO_DST#https://}"
 
   SRC="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_SRC#https://}"
   DST="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_DST#https://}"
@@ -47,7 +47,7 @@ git_clone() {
 
 # Build package.
 pkg_build() {
-  echo "--- [SYSTEM] BUILD: '${GIT_REPO_SRC#https://}'"
+  printf '\n--- [SYSTEM] BUILD: "%s"' "${GIT_REPO_SRC#https://}"
 
   pushd "${d_src}/_build" || exit 1
   ${debuild} -us -uc -i -d -S && popd || exit 1
@@ -55,7 +55,7 @@ pkg_build() {
 
 # Move package to Debian Package Store repository.
 pkg_move() {
-  echo "--- [SYSTEM] MOVE: From '${d_src}' to '${d_dst}'"
+  printf '\n--- [SYSTEM] MOVE: From "%s" to "%s"' "${d_src}" "${d_dst}"
 
   for i in _service _meta README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
     ${rm} -fv "${d_dst}"/${i}
@@ -65,7 +65,7 @@ pkg_move() {
 
 # Push package to Debian Package Store repository.
 git_push() {
-  echo "--- [GIT] PUSH: '${d_dst}' to '${GIT_REPO_DST#https://}'"
+  printf '\n--- [GIT] PUSH: "%s" to "%s"' "${d_dst}" "${GIT_REPO_DST#https://}"
 
   ts="$( _timestamp )"
 
@@ -75,10 +75,10 @@ git_push() {
 
 # Upload "_meta" & "_service" files to OBS.
 obs_upload() {
-  echo "--- [OBS] UPLOAD: '${OBS_PROJECT}/${OBS_PACKAGE}/_meta'"
+  printf '\n--- [OBS] UPLOAD: "%s/%s/_meta"' "${OBS_PROJECT}" "${OBS_PACKAGE}"
   ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_dst}/_meta" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_meta"
 
-  echo "--- [OBS] UPLOAD: '${OBS_PROJECT}/${OBS_PACKAGE}/_service'"
+  printf '\n--- [OBS] UPLOAD: "%s/%s/_service"' "${OBS_PROJECT}" "${OBS_PACKAGE}"
   ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_dst}/_service" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_service"
 
   ${sleep} 5
@@ -86,7 +86,7 @@ obs_upload() {
 
 # Run build package in OBS.
 obs_trigger(){
-  echo "--- [OBS] TRIGGER: '${OBS_PROJECT}/${OBS_PACKAGE}'"
+  printf '\n--- [OBS] TRIGGER: "%s/%s"' "${OBS_PROJECT}" "${OBS_PACKAGE}"
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
