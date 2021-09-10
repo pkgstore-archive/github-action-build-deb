@@ -31,16 +31,16 @@ jobs:
 
 ### Legend
 
-- `git_repo_src` - GitHub source repository URL.
-- `git_repo_dst` - GitHub destination repository URL.
-- `git_user` - GitHub user.
-- `git_email` - GitHub email.
-- `git_token` - GitHub token.
-- `obs_user` - openSUSE Build Service user.
-- `obs_password` - openSUSE Build Service password.
-- `obs_token` - openSUSE Build Service token.
-- `obs_project` - openSUSE Build Service project.
-- `obs_package` - openSUSE Build Service package.
+- `git_repo_src` - GitHub **source repository URL**.
+- `git_repo_dst` - GitHub **destination repository URL**.
+- `git_user` - GitHub **user**.
+- `git_email` - GitHub **email**.
+- `git_token` - GitHub **token**.
+- `obs_user` - openSUSE Build Service **user**.
+- `obs_password` - openSUSE Build Service **password**.
+- `obs_token` - openSUSE Build Service **token**.
+- `obs_project` - openSUSE Build Service **project**.
+- `obs_package` - openSUSE Build Service **package**.
 
 ## openSUSE Build Service
 
