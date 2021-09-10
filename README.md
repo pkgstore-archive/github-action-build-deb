@@ -44,7 +44,7 @@ jobs:
 
 ## openSUSE Build Service
 
-### Add `_meta` file
+### File: `_meta`
 
 ```xml
 <package name="PKG_NAME" project="HOME:PROJECT">
@@ -53,7 +53,7 @@ jobs:
 </package>
 ```
 
-### Add `_service` file
+### File: `_service`
 
 ```xml
 <services>
