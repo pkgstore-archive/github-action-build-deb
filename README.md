@@ -36,11 +36,11 @@ jobs:
 - `git_user` - GitHub user.
 - `git_email` - GitHub email.
 - `git_token` - GitHub token.
-- `obs_user` - openSUSE BS user.
-- `obs_password` - openSUSE BS password.
-- `obs_token` - openSUSE BS token.
-- `obs_project` - openSUSE BS project.
-- `obs_package` - openSUSE BS package.
+- `obs_user` - openSUSE Build Service user.
+- `obs_password` - openSUSE Build Service password.
+- `obs_token` - openSUSE Build Service token.
+- `obs_project` - openSUSE Build Service project.
+- `obs_package` - openSUSE Build Service package.
 
 ## openSUSE Build Service
 
