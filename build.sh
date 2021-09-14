@@ -1,45 +1,35 @@
 #!/bin/bash
 
-build() {
-  # Vars.
-  GIT_REPO_SRC="${1}"
-  GIT_REPO_DST="${2}"
-  GIT_USER="${3}"
-  GIT_EMAIL="${4}"
-  GIT_TOKEN="${5}"
-  OBS_USER="${6}"
-  OBS_PASSWORD="${7}"
-  OBS_TOKEN="${8}"
-  OBS_PROJECT="${9}"
-  OBS_PACKAGE="${10}"
+# Vars.
+GIT_REPO_SRC="${1}"
+GIT_REPO_DST="${2}"
+GIT_USER="${3}"
+GIT_EMAIL="${4}"
+GIT_TOKEN="${5}"
+OBS_USER="${6}"
+OBS_PASSWORD="${7}"
+OBS_TOKEN="${8}"
+OBS_PROJECT="${9}"
+OBS_PACKAGE="${10}"
 
-  # Apps.
-  curl="$( command -v curl )"
-  date="$( command -v date )"
-  debuild="$( command -v debuild )"
-  git="$( command -v git )"
-  mv="$( command -v mv )"
-  rm="$( command -v rm )"
-  sleep="$( command -v sleep )"
-  tar="$( command -v tar )"
+# Apps.
+curl="$( command -v curl )"
+date="$( command -v date )"
+debuild="$( command -v debuild )"
+git="$( command -v git )"
+mv="$( command -v mv )"
+rm="$( command -v rm )"
+sleep="$( command -v sleep )"
+tar="$( command -v tar )"
 
-  # Dirs.
-  d_src="/root/git/repo_src"
-  d_dst="/root/git/repo_dst"
+# Dirs.
+d_src="/root/git/repo_src"
+d_dst="/root/git/repo_dst"
 
-  # Git config.
-  ${git} config --global user.name "${GIT_USER}"
-  ${git} config --global user.email "${GIT_EMAIL}"
-  ${git} config --global init.defaultBranch 'main'
-
-  _git_clone          \
-    && _pkg_orig_pack \
-    && _pkg_src_build \
-    && _pkg_src_move  \
-    && _git_push      \
-    && _obs_upload    \
-    && _obs_trigger
-}
+# Git config.
+${git} config --global user.name "${GIT_USER}"
+${git} config --global user.email "${GIT_EMAIL}"
+${git} config --global init.defaultBranch 'main'
 
 _timestamp() {
   ${date} -u '+%Y-%m-%d %T'
@@ -125,5 +115,12 @@ _obs_trigger() {
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
-build "$@"
+_git_clone          \
+  && _pkg_orig_pack \
+  && _pkg_src_build \
+  && _pkg_src_move  \
+  && _git_push      \
+  && _obs_upload    \
+  && _obs_trigger
+
 exit 0
