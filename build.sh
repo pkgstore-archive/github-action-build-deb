@@ -75,12 +75,16 @@ _pkg_orig_pack() {
   echo "--- [SYSTEM] PACK: '${OBS_PACKAGE}' (*.orig.tar.xz)"
   pushd "${d_src}" || exit 1
 
-  for i in "${OBS_PACKAGE}-"*; do PKG_VER=${i##*-}; break; done;
+  for i in "${OBS_PACKAGE}-"*; do
+    PKG_VER=${i##*-}
+    break
+  done;
+
   for i in *.orig.tar.*; do
     if [[ ! -f "${i}" ]]; then
       SOURCE="${OBS_PACKAGE}-${PKG_VER}"
       TARGET="${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-      ${tar} -cJvf "${TARGET}.tar.xz" "${SOURCE}"
+      ${tar} -cJf "${TARGET}.tar.xz" "${SOURCE}"
       echo "...'${TARGET}' is created!"
     else
       echo "...'${TARGET}' exist!"
