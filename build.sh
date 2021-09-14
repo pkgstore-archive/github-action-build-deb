@@ -119,7 +119,7 @@ _obs_upload() {
 }
 
 # Run build package in OBS.
-_obs_trigger(){
+_obs_trigger() {
   echo "--- [OBS] TRIGGER: ${OBS_PROJECT}/${OBS_PACKAGE}"
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
