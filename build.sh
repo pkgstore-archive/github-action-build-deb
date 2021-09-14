@@ -54,7 +54,7 @@ _git_clone() {
 
 _pkg_orig_pack() {
   pushd "${d_src}" || exit 1
-    ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
+    ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
   popd || exit 1
 }
 
