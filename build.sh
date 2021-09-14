@@ -21,6 +21,7 @@ build() {
   mv="$( command -v mv )"
   rm="$( command -v rm )"
   sleep="$( command -v sleep )"
+  tar="$( command -v tar )"
 
   # Dirs.
   d_src="/root/git/repo_src"
@@ -53,16 +54,22 @@ _git_clone() {
 
   ${git} clone "${SRC}" "${d_src}" \
     && ${git} clone "${DST}" "${d_dst}"
+
+  echo "--- [GIT] LIST: ${d_src}"
+  ls -1 "${d_src}"
+
+  echo "--- [GIT] LIST: ${d_dst}"
+  ls -1 "${d_dst}"
 }
 
 _pkg_orig_pack() {
-  echo "--- [SYSTEM] ORIG-PACK"
+  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
   pushd "${d_src}" || exit 1
 
   for i in "${OBS_PACKAGE}-"*; do PKG_VER=${i##*-}; break; done;
 
   for i in *.orig.tar.*; do
-    [[ ! -f "${i}" ]] && tar -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
+    [[ ! -f "${i}" ]] && ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
     break
   done
 
