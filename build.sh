@@ -33,13 +33,13 @@ init() {
   ${git} config --global init.defaultBranch 'main'
 
   # Run.
-  _git_clone          \
-    && _pkg_orig_pack \
-    && _pkg_src_build \
-    && _pkg_src_move  \
-    && _git_push      \
-    && _obs_upload    \
-    && _obs_trigger
+  git_clone           \
+    && pkg_orig_pack  \
+    && pkg_src_build  \
+    && pkg_src_move   \
+    && git_push       \
+    && obs_upload     \
+    && obs_trigger
 }
 
 pushd() {
@@ -50,12 +50,12 @@ popd() {
   command popd > /dev/null || exit 1
 }
 
-_timestamp() {
+timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
 
 # Get repos.
-_git_clone() {
+git_clone() {
   echo "--- [GIT] CLONE: ${GIT_REPO_SRC#https://} & ${GIT_REPO_DST#https://}"
 
   SRC="https://${GIT_USER}:${GIT_TOKEN}@${GIT_REPO_SRC#https://}"
@@ -71,7 +71,7 @@ _git_clone() {
   ls -1 "${d_dst}"
 }
 
-_pkg_orig_pack() {
+pkg_orig_pack() {
   echo "--- [SYSTEM] PACK: '${OBS_PACKAGE}' (*.orig.tar.xz)"
   pushd "${d_src}" || exit 1
 
@@ -97,7 +97,7 @@ _pkg_orig_pack() {
 }
 
 # Build package.
-_pkg_src_build() {
+pkg_src_build() {
   echo "--- [SYSTEM] BUILD: '${GIT_REPO_SRC#https://}'"
   pushd "${d_src}/_build" || exit 1
 
@@ -107,7 +107,7 @@ _pkg_src_build() {
 }
 
 # Move package to Debian Package Store repository.
-_pkg_src_move() {
+pkg_src_move() {
   echo "--- [SYSTEM] MOVE: '${d_src}' -> '${d_dst}'"
 
   for i in _service _meta README.md LICENSE *.tar.* *.dsc *.build *.buildinfo *.changes; do
@@ -117,18 +117,18 @@ _pkg_src_move() {
 }
 
 # Push package to Debian Package Store repository.
-_git_push() {
+git_push() {
   echo "--- [GIT] PUSH: '${d_dst}' -> '${GIT_REPO_DST#https://}'"
   pushd "${d_dst}" || exit 1
 
-  ts="$( _timestamp )"
+  ts="$( timestamp )"
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 
   popd || exit 1
 }
 
 # Upload "_meta" & "_service" files to OBS.
-_obs_upload() {
+obs_upload() {
   echo "--- [OBS] UPLOAD: '${OBS_PROJECT}/${OBS_PACKAGE}/_meta'"
   ${curl} -u "${OBS_USER}":"${OBS_PASSWORD}" -X PUT -T "${d_dst}/_meta" "https://api.opensuse.org/source/${OBS_PROJECT}/${OBS_PACKAGE}/_meta"
 
@@ -139,7 +139,7 @@ _obs_upload() {
 }
 
 # Run build package in OBS.
-_obs_trigger() {
+obs_trigger() {
   echo "--- [OBS] TRIGGER: '${OBS_PROJECT}/${OBS_PACKAGE}'"
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
