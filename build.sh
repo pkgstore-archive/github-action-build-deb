@@ -84,12 +84,9 @@ _pkg_orig_pack() {
     if [[ ! -f "${i}" ]]; then
       SOURCE="${OBS_PACKAGE}-${PKG_VER}"
       TARGET="${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-      SIZE=$( du -sk "${SOURCE}" | cut -f 1 )
-      # ${tar} -cJf "${TARGET}" "${SOURCE}"
-      ${tar} -cf - "${SOURCE}" | pv -p -s "${SIZE}k" | xz -c > "${TARGET}"
-      echo "...'${TARGET}' is created!"
+      ${tar} -cJf "${TARGET}" "${SOURCE}"
     else
-      echo "...'${TARGET}' exist!"
+      echo "'${TARGET}' exist!"
     fi
     break
   done
