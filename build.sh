@@ -73,11 +73,9 @@ _git_clone() {
 
 _pkg_orig_pack() {
   pushd "${d_src}" || exit 1
+  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE} (*.orig.tar.xz)"
 
   for i in "${OBS_PACKAGE}-"*; do PKG_VER=${i##*-}; break; done;
-
-  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-
   for i in *.orig.tar.*; do
     ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
     break
@@ -141,4 +139,5 @@ _obs_trigger() {
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
+build "$@"
 exit 0
