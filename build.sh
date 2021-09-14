@@ -63,10 +63,11 @@ _git_clone() {
 }
 
 _pkg_orig_pack() {
-  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
   pushd "${d_src}" || exit 1
 
   for i in "${OBS_PACKAGE}-"*; do PKG_VER=${i##*-}; break; done;
+
+  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
 
   for i in *.orig.tar.*; do
     [[ ! -f "${i}" ]] && ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
