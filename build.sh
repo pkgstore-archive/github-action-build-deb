@@ -117,7 +117,6 @@ _obs_trigger() {
 }
 
 _git_clone          \
-  && _pkg_orig_pack \
   && _pkg_src_build \
   && _pkg_src_move  \
   && _git_push      \
