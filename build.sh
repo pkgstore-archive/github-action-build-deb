@@ -75,6 +75,8 @@ _pkg_orig_pack() {
   echo "--- [SYSTEM] PACK: '${OBS_PACKAGE}' (*.orig.tar.xz)"
   pushd "${d_src}" || exit 1
 
+  PKG_VER="1.0.0"
+
   for i in "${OBS_PACKAGE}-"*; do
     PKG_VER=${i##*-}
     break
