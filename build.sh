@@ -54,19 +54,7 @@ _git_clone() {
 
 _pkg_orig_pack() {
   pushd "${d_src}" || exit 1
-
-  if ls ./"${OBS_PACKAGE}"-* > /dev/null 2>&1; then
-    PKG_VER=${i##*-}
-  fi;
-
-  echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-
-  if ls ./*.orig.tar.* > /dev/null 2>&1; then
-    echo "'${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz' exist!"
-  else
     ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
-  fi;
-
   popd || exit 1
 }
 
