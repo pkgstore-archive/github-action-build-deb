@@ -63,6 +63,7 @@ _pkg_orig_pack() {
     echo "'${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz' exist!"
   else
     pwd
+    ls -1
     ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
   fi;
 
