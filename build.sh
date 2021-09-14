@@ -116,12 +116,12 @@ _obs_trigger() {
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
-_git_clone          \
-  && _pkg_orig_pack \
-  && _pkg_src_build \
-  && _pkg_src_move  \
-  && _git_push      \
-  && _obs_upload    \
-  && _obs_trigger
+_git_clone "$@"          \
+  && _pkg_orig_pack "$@" \
+  && _pkg_src_build "$@" \
+  && _pkg_src_move "$@"  \
+  && _git_push "$@"      \
+  && _obs_upload "$@"    \
+  && _obs_trigger "$@"
 
 exit 0
