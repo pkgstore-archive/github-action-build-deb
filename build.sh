@@ -59,10 +59,11 @@ _pkg_orig_pack() {
 
   echo "--- [SYSTEM] PACK: ${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
 
-  for i in *.orig.tar.*; do
-    [[ ! -f "${i}" ]] && ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
-    break
-  done
+  if ls ./*.orig.tar.* > /dev/null 2>&1; then
+    echo "'${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz' exist!"
+  else
+    ${tar} -cJfv "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
+  fi;
 
   popd || exit 1
 }
