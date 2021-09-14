@@ -78,14 +78,14 @@ _pkg_orig_pack() {
   for i in "${OBS_PACKAGE}-"*; do PKG_VER=${i##*-}; break; done;
   for i in *.orig.tar.*; do
     if [[ ! -f "${i}" ]]; then
-      # ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
-      SOURCE="${OBS_PACKAGE}-${PKG_VER}"
-      TARGET="${OBS_PACKAGE}_${PKG_VER}.orig"
-      SIZE=$( du -sk "${SOURCE}" | cut -f1 )
-      ${tar} -cf - "${SOURCE}" | pv -p -s "${SIZE}k" | xz -c "${TARGET}"
-      echo "...'${TARGET}' is created!"
+      ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
+      # SOURCE="${OBS_PACKAGE}-${PKG_VER}"
+      # TARGET="${OBS_PACKAGE}_${PKG_VER}.orig"
+      # SIZE=$( du -sk "${SOURCE}" | cut -f1 )
+      # ${tar} -cf - "${SOURCE}" | pv -p -s "${SIZE}k" | xz -c "${TARGET}"
+      #echo "...'${TARGET}' is created!"
     else
-      echo "...'${TARGET}' exist!"
+      #echo "...'${TARGET}' exist!"
     fi
     break
   done
