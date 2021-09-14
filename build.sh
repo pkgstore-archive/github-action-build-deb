@@ -42,14 +42,17 @@ init() {
     && obs_trigger
 }
 
+# PUSHD command.
 pushd() {
   command pushd "$@" > /dev/null || exit 1
 }
 
+# POPD command.
 popd() {
   command popd > /dev/null || exit 1
 }
 
+# Timestamp.
 timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
@@ -71,6 +74,7 @@ git_clone() {
   ls -1 "${d_dst}"
 }
 
+# Packing "*.orig" files.
 pkg_orig_pack() {
   echo "--- [SYSTEM] PACK: '${OBS_PACKAGE}' (*.orig.tar.xz)"
   pushd "${d_src}" || exit 1
