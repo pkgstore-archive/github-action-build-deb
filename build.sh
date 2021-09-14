@@ -1,6 +1,6 @@
 #!/bin/bash
 
-build() {
+init() {
   # Vars.
   GIT_REPO_SRC="${1}"
   GIT_REPO_DST="${2}"
@@ -32,14 +32,14 @@ build() {
   ${git} config --global user.email "${GIT_EMAIL}"
   ${git} config --global init.defaultBranch 'main'
 
-  # Init.
-  _git_clone "$@"          \
-    && _pkg_orig_pack "$@" \
-    && _pkg_src_build "$@" \
-    && _pkg_src_move "$@"  \
-    && _git_push "$@"      \
-    && _obs_upload "$@"    \
-    && _obs_trigger "$@"
+  # Run.
+  _git_clone          \
+    && _pkg_orig_pack \
+    && _pkg_src_build \
+    && _pkg_src_move  \
+    && _git_push      \
+    && _obs_upload    \
+    && _obs_trigger
 }
 
 pushd() {
@@ -80,22 +80,13 @@ _pkg_orig_pack() {
     if [[ ! -f "${i}" ]]; then
       SOURCE="${OBS_PACKAGE}-${PKG_VER}"
       TARGET="${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-      # ${tar} -cJf "${TARGET}.tar.xz" "${SOURCE}"
-      SIZE=$( du -sk "${SOURCE}" | cut -f1 )
-      ${tar} -cf - "${SOURCE}" | pv -p -s "${SIZE}k" | xz -c > "${TARGET}"
-      #echo "...'${TARGET}' is created!"
+      ${tar} -cJf "${TARGET}.tar.xz" "${SOURCE}"
+      echo "...'${TARGET}' is created!"
     else
       echo "...'${TARGET}' exist!"
     fi
     break
   done
-
-
-  # if ls ./*.orig.tar.* > /dev/null 2>&1; then
-  #   echo "'${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz' exist!"
-  # else
-  #   ${tar} -cJf "${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz" "${OBS_PACKAGE}-${PKG_VER}"
-  # fi;
 
   popd || exit 1
 }
@@ -148,5 +139,5 @@ _obs_trigger() {
   ${curl} -H "Authorization: Token ${OBS_TOKEN}" -X POST "https://api.opensuse.org/trigger/runservice?project=${OBS_PROJECT}&package=${OBS_PACKAGE}"
 }
 
-build "$@"
+init "$@"
 exit 0
