@@ -93,7 +93,7 @@ pkg_orig_pack() {
     if [[ ! -f "${i}" ]]; then
       ${tar} -cJf "${TARGET}" "${SOURCE}"
     else
-      echo "'${TARGET}' exist!"
+      echo "'${i}' exist!"
     fi
     break
   done
