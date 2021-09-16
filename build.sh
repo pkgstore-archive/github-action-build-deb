@@ -87,10 +87,9 @@ pkg_orig_pack() {
   done;
 
   for i in *.orig.tar.*; do
-    SOURCE="${OBS_PACKAGE}-${PKG_VER}"
-    TARGET="${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
-
     if [[ ! -f "${i}" ]]; then
+      SOURCE="${OBS_PACKAGE}-${PKG_VER}"
+      TARGET="${OBS_PACKAGE}_${PKG_VER}.orig.tar.xz"
       ${tar} -cJf "${TARGET}" "${SOURCE}"
     else
       echo "'${i}' exist!"
