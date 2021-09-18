@@ -57,7 +57,7 @@ timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
 
-# Get repos.
+# Clone repository.
 git_clone() {
   echo "--- [GIT] CLONE: ${GIT_REPO_SRC#https://} & ${GIT_REPO_DST#https://}"
 
