@@ -43,17 +43,17 @@ init() {
 }
 
 # PUSHD command.
-pushd() {
+_pushd() {
   command pushd "$@" > /dev/null || exit 1
 }
 
 # POPD command.
-popd() {
+_popd() {
   command popd > /dev/null || exit 1
 }
 
 # Timestamp.
-timestamp() {
+_timestamp() {
   ${date} -u '+%Y-%m-%d %T'
 }
 
@@ -77,7 +77,7 @@ git_clone() {
 # Packing "*.orig" files.
 pkg_orig_pack() {
   echo "--- [SYSTEM] PACK: '${OBS_PACKAGE}' (*.orig.tar.xz)"
-  pushd "${d_src}" || exit 1
+  _pushd "${d_src}" || exit 1
 
   PKG_VER="1.0.0"
 
@@ -97,17 +97,17 @@ pkg_orig_pack() {
     break
   done
 
-  popd || exit 1
+  _popd || exit 1
 }
 
 # Build package.
 pkg_src_build() {
   echo "--- [SYSTEM] BUILD: '${GIT_REPO_SRC#https://}'"
-  pushd "${d_src}/_build" || exit 1
+  _pushd "${d_src}/_build" || exit 1
 
   ${debuild} -us -uc -i -d -S
 
-  popd || exit 1
+  _popd || exit 1
 }
 
 # Move package to Debian Package Store repository.
@@ -123,12 +123,12 @@ pkg_src_move() {
 # Push package to Debian Package Store repository.
 git_push() {
   echo "--- [GIT] PUSH: '${d_dst}' -> '${GIT_REPO_DST#https://}'"
-  pushd "${d_dst}" || exit 1
+  _pushd "${d_dst}" || exit 1
 
-  ts="$( timestamp )"
+  ts="$( _timestamp )"
   ${git} add . && ${git} commit -a -m "BUILD: ${ts}" && ${git} push
 
-  popd || exit 1
+  _popd || exit 1
 }
 
 # Upload "_meta" & "_service" files to OBS.
