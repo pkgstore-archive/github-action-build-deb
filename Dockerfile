@@ -10,6 +10,6 @@ RUN apt update && apt install --yes ca-certificates
 
 COPY sources-list /etc/apt/sources.list
 COPY *.sh /
-RUN apt update && apt install --yes bash curl git git-lfs tar xz-utils build-essential fakeroot devscripts
+RUN apt update && apt install --yes bash curl git git-lfs tar xz-utils build-essential fakeroot devscripts dh-sequence-gnome gnome-pkg-tools
 
 ENTRYPOINT ["/entrypoint.sh"]
