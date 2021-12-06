@@ -1,4 +1,4 @@
-FROM debian:stable-slim
+FROM debian:stable
 
 LABEL "name"="Debian Build Package"
 LABEL "description"=""
