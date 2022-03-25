@@ -105,8 +105,6 @@ pkg_src_build() {
 
   ${debuild} -us -uc -i -d -S
 
-  cat /tmp/apache2_2.4.53-101.diff.*
-
   _popd || exit 1
 }
 
