@@ -103,7 +103,7 @@ pkg_src_build() {
   echo "--- [SYSTEM] BUILD: '${GIT_REPO_SRC#https://}'"
   _pushd "${d_src}/_build" || exit 1
 
-  ${debuild} -us -uc -i -d -S
+  dpkg-source -i -b .
 
   _popd || exit 1
 }
